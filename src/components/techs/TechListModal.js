@@ -1,25 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import TechItem from './TechItem';
+import { geTechnicians } from '../../actions/techActions';
 
-const TechListModal = props => {
-  const [techs, setTechs] = useState([]);
-  const [loading, setLoading] = useState(false);
-
+const TechListModal = ({ geTechnicians, techs, loading }) => {
   useEffect(() => {
-    getTechs();
+    geTechnicians();
     // eslint-disable-next-line
   }, []);
-
-  const getTechs = async () => {
-    setLoading(true);
-
-    const response = await axios.get('/techs');
-
-    setTechs(response.data);
-    setLoading(false);
-  };
 
   const renderTechs = () => {
     if (!loading && techs.length === 0) {
@@ -39,4 +29,25 @@ const TechListModal = props => {
   );
 };
 
-export default TechListModal;
+///////////////////////////// propTypes ////////////////////////////////
+TechListModal.propTypes = {
+  techs: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  geTechnicians: PropTypes.func.isRequired
+};
+
+///////////////////////////// mapStateToProps ////////////////////////////////
+const mapStateToProps = state => ({
+  techs: state.tech.techs,
+  loading: state.tech.loading
+});
+
+///////////////////////////// mapDispatchToProps ////////////////////////////////
+const mapDispatchToProps = dispatch => ({
+  geTechnicians: () => dispatch(geTechnicians())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TechListModal);

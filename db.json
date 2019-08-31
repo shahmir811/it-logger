@@ -3,9 +3,9 @@
     {
       "id": 1,
       "message": "Change network card in server 020",
-      "attention": true,
-      "tech": "Sam Smith",
-      "date": "2019-08-31T03:09:19.960Z"
+      "attention": false,
+      "tech": "Tipu Sultan",
+      "date": "2019-08-31T05:22:50.452Z"
     },
     {
       "message": "Replace hard drive in work station 005",
@@ -15,18 +15,25 @@
       "id": 2
     },
     {
+      "id": 3,
       "message": "New LCD installation in manager room",
       "attention": false,
       "tech": "Sam Smith",
-      "date": "2019-08-30T06:30:03.275Z",
-      "id": 3
+      "date": "2019-08-31T05:29:38.577Z"
     },
     {
       "id": 4,
       "message": "Replacement of wires in basement server room.",
       "attention": true,
-      "tech": "John Doe",
-      "date": "2019-08-31T03:09:28.826Z"
+      "tech": "Sara Wilson",
+      "date": "2019-08-31T05:28:14.096Z"
+    },
+    {
+      "id": 5,
+      "message": "New server replacement needed",
+      "attention": false,
+      "tech": "Tipu Sultan",
+      "date": "2019-08-31T05:23:30.555Z"
     }
   ],
   "techs": [
@@ -49,6 +56,11 @@
       "firstName": "Tipu",
       "lastName": "Sultan",
       "id": 4
+    },
+    {
+      "firstName": "Shahmir",
+      "lastName": "Jadoon",
+      "id": 5
     }
   ]
 }
