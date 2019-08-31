@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import M from 'materialize-css/dist/js/materialize.min.js';
+import PropTypes from 'prop-types';
 
-const EditLogModal = props => {
+import { updateLog } from '../../actions/logActions';
+
+const EditLogModal = ({ current, updateLog }) => {
   const [log, setLog] = useState({
     message: '',
     tech: ''
@@ -10,6 +14,18 @@ const EditLogModal = props => {
   const [attention, setAttention] = useState(false);
 
   const { message, tech } = log;
+
+  useEffect(() => {
+    if (current) {
+      setLog({
+        message: current.message,
+        tech: current.tech
+      });
+
+      setAttention(current.attention);
+    }
+    // eslint-disable-next-line
+  }, [current]);
 
   const onChange = e => {
     setLog({ ...log, [e.target.name]: e.target.value });
@@ -21,6 +37,19 @@ const EditLogModal = props => {
       return;
     }
     console.log(message, attention, tech);
+
+    const updatedLogValues = {
+      id: current.id,
+      message,
+      attention,
+      tech,
+      date: new Date()
+    };
+
+    updateLog(updatedLogValues);
+
+    M.toast({ html: `Log updated by ${tech}` });
+
     // Clear input fields
     setLog({
       message: '',
@@ -41,9 +70,6 @@ const EditLogModal = props => {
               value={message}
               onChange={onChange}
             />
-            <label htmlFor='message' className='active'>
-              Log Message
-            </label>
           </div>
         </div>
         <div className='row'>
@@ -75,6 +101,7 @@ const EditLogModal = props => {
                   className='filled-in'
                   name='attention'
                   value={attention}
+                  checked={attention}
                   onChange={() => setAttention(!attention)}
                 />
                 <span>Needs attention</span>
@@ -101,4 +128,26 @@ const modalStyle = {
   height: '75%'
 };
 
-export default EditLogModal;
+///////////////////////////// propTypes ////////////////////////////////
+
+EditLogModal.propTypes = {
+  current: PropTypes.object,
+  updateLog: PropTypes.func
+};
+
+///////////////////////////// mapStateToProps ////////////////////////////////
+
+const mapStateToProps = state => ({
+  current: state.log.current
+});
+
+///////////////////////////// mapDispatchToProps ////////////////////////////////
+
+const mapDispatchToProps = dispatch => ({
+  updateLog: log => dispatch(updateLog(log))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditLogModal);

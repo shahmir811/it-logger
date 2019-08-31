@@ -1,29 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import LogItem from './LogItem';
 import PreLoader from '../layout/PreLoader';
 
-const Logs = props => {
-  const [logs, setLogs] = useState([]);
-  const [loading, setLoading] = useState(false);
+// import actions below
+import { getLogs } from '../../actions/logActions';
 
+const Logs = ({ loading, logs, getLogs }) => {
   useEffect(() => {
     getLogs();
     // eslint-disable-next-line
   }, []);
 
-  const getLogs = async () => {
-    setLoading(true);
-
-    const response = await axios.get('/logs');
-
-    setLogs(response.data);
-    setLoading(false);
-  };
-
   const renderLogs = () => {
-    if (!loading && logs.length === 0) {
+    if (!loading && logs === null) {
       return <p className='center'>No logs to show</p>;
     } else {
       return logs.map(log => <LogItem key={log.id} log={log} />);
@@ -44,4 +36,28 @@ const Logs = props => {
   );
 };
 
-export default Logs;
+///////////////////////////// propTypes ////////////////////////////////
+
+Logs.propTypes = {
+  logs: PropTypes.array,
+  loading: PropTypes.bool.isRequired,
+  getLogs: PropTypes.func.isRequired
+};
+
+///////////////////////////// mapStateToProps ////////////////////////////////
+
+const mapStateToProps = state => ({
+  logs: state.log.logs,
+  loading: state.log.loading
+});
+
+///////////////////////////// mapDispatchToProps ////////////////////////////////
+
+const mapDispatchToProps = dispatch => ({
+  getLogs: () => dispatch(getLogs())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Logs);

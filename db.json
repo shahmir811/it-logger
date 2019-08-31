@@ -2,31 +2,31 @@
   "logs": [
     {
       "id": 1,
-      "message": "Changed work drive on workstation 005",
-      "attention": false,
-      "date": "03-03-2015",
-      "tech": "Sam Smith"
-    },
-    {
-      "id": 2,
-      "message": "Workstation 007 not posting",
+      "message": "Change network card in server 020",
       "attention": true,
-      "date": "03-03-2018",
-      "tech": "John Doe"
+      "tech": "Sam Smith",
+      "date": "2019-08-31T03:09:19.960Z"
     },
     {
-      "id": 3,
-      "message": "Changed memory on workstation 050",
+      "message": "Replace hard drive in work station 005",
+      "attention": true,
+      "tech": "Sara Wilson",
+      "date": "2019-08-30T06:29:25.949Z",
+      "id": 2
+    },
+    {
+      "message": "New LCD installation in manager room",
       "attention": false,
-      "date": "03-05-2019",
-      "tech": "Sara Wilson"
+      "tech": "Sam Smith",
+      "date": "2019-08-30T06:30:03.275Z",
+      "id": 3
     },
     {
-      "name": "Raheem Shah",
-      "email": "raheem@gmail.com",
-      "phone": "222-222-2222",
-      "type": "personel",
-      "id": 4
+      "id": 4,
+      "message": "Replacement of wires in basement server room.",
+      "attention": true,
+      "tech": "John Doe",
+      "date": "2019-08-31T03:09:28.826Z"
     }
   ],
   "techs": [

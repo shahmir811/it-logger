@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import M from 'materialize-css/dist/js/materialize.min.js';
+import PropTypes from 'prop-types';
 
-const AddLogModal = props => {
+// import actions below
+import { addLog } from '../../actions/logActions';
+
+const AddLogModal = ({ addLog }) => {
   const [log, setLog] = useState({
     message: '',
     tech: ''
@@ -19,14 +24,24 @@ const AddLogModal = props => {
     if (message === '' || tech === '') {
       M.toast({ html: 'Please add message and tech' });
       return;
+    } else {
+      const newLog = {
+        message,
+        attention,
+        tech,
+        date: new Date()
+      };
+      addLog(newLog);
+
+      M.toast({ html: `New log added by ${tech}` });
+
+      // Clear input fields
+      setLog({
+        message: '',
+        tech: ''
+      });
+      setAttention(false);
     }
-    console.log(message, attention, tech);
-    // Clear input fields
-    setLog({
-      message: '',
-      tech: ''
-    });
-    setAttention(false);
   };
 
   return (
@@ -75,6 +90,7 @@ const AddLogModal = props => {
                   className='filled-in'
                   name='attention'
                   value={attention}
+                  checked={attention}
                   onChange={() => setAttention(!attention)}
                 />
                 <span>Needs attention</span>
@@ -101,4 +117,18 @@ const modalStyle = {
   height: '75%'
 };
 
-export default AddLogModal;
+///////////////////////////// propTypes ////////////////////////////////
+AddLogModal.propTypes = {
+  addLog: PropTypes.func.isRequired
+};
+
+///////////////////////////// mapDispatchToProps ////////////////////////////////
+
+const mapDispatchToProps = dispatch => ({
+  addLog: log => dispatch(addLog(log))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(AddLogModal);

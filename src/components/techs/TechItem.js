@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const TechItem = ({ tech }) => {
-  const { id, firstName, lastName } = tech;
+  const { firstName, lastName } = tech;
 
   return (
     <li className='collection-item'>
